@@ -8,7 +8,7 @@ export interface Props {
 const { dateString } = Astro.props;
 
 const date = parseISO(dateString);
-const formattedDate = format(date, 'LLLL d, yyyy');
+const formattedDate = format(date, 'LLLL\td, yyyy');
 ---
 
 <time datetime={dateString}>{formattedDate}</time>

@@ -1,0 +1,37 @@
+#+TITLE: Change Log
+#+AUTHOR: astro-sanity
+#+DATE: 2025-01-26
+
+* 2025-01-26 - Visual Parity & Styling Improvements
+
+** 🎯 Major Updates
+- *Replaced placeholder images with authentic Sanity demo images* - Downloaded and implemented the exact same public domain images used in the original Sanity blog demo
+- *Fixed container max-width* - Adjusted from 1500px to 1242px to exactly match original blog measurements  
+- *Applied consistent letter spacing* - Implemented =tracking-[-0.06em]= across all bold headings for unified typography
+- *Implemented custom image shadows* - Added =.shadow-small= class with =0 5px 10px rgba(0, 0, 0, .12)= to match original's pronounced shadows
+- *Simplified prose styling* - Reverted from custom colors to default Tailwind Typography styling to match original exactly
+
+** 📝 Content Changes
+- Changed main title from "astro-sanity" to "Blog."
+- Updated hero post title font size from 60px to 44px to match original measurements
+- Fixed date formatting to use proper tab character spacing
+
+** 🔧 Technical Improvements  
+- *Comprehensive visual audit* - Systematically compared typography, spacing, shadows, colors, components, responsive behavior, interactions, and styling
+- *Optimized font loading* - Maintained Inter font for consistent typography
+- *Enhanced image asset system* - All images now use authentic Sanity demo assets with proper optimization
+
+** 🎨 Design Refinements
+- Hero post title: =text-4xl leading-tight lg:text-[44px]= (custom 44px for large screens)
+- Container configuration: max-width 1282px (accounts for 40px padding = 1242px content width)
+- Typography: =tracking-[-0.06em]= applied to all bold headings ("Blog.", "More Stories", "Recent Stories", blog post titles)
+- Shadows: Custom =.shadow-small= class for more pronounced image shadows  
+- Content styling: Clean default =prose= class instead of custom color overrides
+
+** ✅ Quality Assurance
+- Verified visual parity with original Sanity blog (https://next-blog-sanity.vercel.app)
+- Confirmed responsive behavior across breakpoints
+- Tested all interactive states and hover effects
+- Validated image optimization and loading performance
+
+This update brings the blog to pixel-perfect visual parity with the original Sanity template while maintaining Astro's performance benefits and MDX content authoring workflow.
