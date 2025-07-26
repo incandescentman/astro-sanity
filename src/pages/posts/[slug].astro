@@ -5,6 +5,7 @@ import Layout from '../../layouts/Layout.astro';
 import CoverImage from '../../components/CoverImage.astro';
 import Avatar from '../../components/Avatar.astro';
 import DateComponent from '../../components/DateComponent.astro';
+import MoreStories from '../../components/MoreStories.astro';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const posts = await getCollection('blog');
@@ -17,57 +18,64 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 const { post } = Astro.props;
 const { Content } = await post.render();
+
+// Get other posts for "Recent Stories" section
+const allPosts = await getCollection('blog');
+const otherPosts = allPosts
+  .filter(p => p.slug !== post.slug)
+  .sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime())
+  .slice(0, 2);
+const morePosts = otherPosts;
 ---
 
 <Layout title={post.data.title}>
-  <article>
-    <div class="container mx-auto px-5">
-      <h2 class="mb-16 mt-10 text-2xl font-bold leading-tight tracking-tight md:text-4xl md:tracking-tighter">
-        <a href="/" class="hover:underline">
-          astro-sanity
-        </a>
-      </h2>
-      
-      <h1 class="text-balance text-6xl font-bold leading-tight tracking-tighter md:text-7xl lg:text-8xl mb-12">
+  <div class="container mx-auto px-5">
+    <h2 class="mb-16 mt-10 text-2xl font-bold leading-tight tracking-tight md:text-4xl md:tracking-tighter">
+      <a href="/" class="hover:underline">
+        astro-sanity
+      </a>
+    </h2>
+    <article>
+      <h1 class="text-balance mb-12 text-6xl font-bold leading-tight tracking-tighter md:text-7xl md:leading-none lg:text-8xl">
         {post.data.title}
       </h1>
-      
-      {post.data.Image && (
-        <div class="mb-8 md:mb-16">
-          <CoverImage 
-            image={post.data.Image}
-            priority 
-          />
-        </div>
-      )}
-      
+      <div class="hidden md:mb-12 md:block">
+        <Avatar 
+          name={post.data.author} 
+          picture={post.data.authorImage}
+        />
+      </div>
+      <div class="mb-8 sm:mx-0 md:mb-16">
+        <CoverImage 
+          image={post.data.Image}
+          priority 
+        />
+      </div>
       <div class="mx-auto max-w-2xl">
         <div class="mb-6 block md:hidden">
           <Avatar 
             name={post.data.author} 
             picture={post.data.authorImage}
           />
-          <div class="mb-6 text-lg">
-            <DateComponent dateString={post.data.publishDate.toISOString()} />
-          </div>
         </div>
-        
-        <div class="hidden md:block mb-12">
-          <Avatar 
-            name={post.data.author} 
-            picture={post.data.authorImage}
-          />
-          <div class="mb-6 text-lg">
+        <div class="mb-6 text-lg">
+          <div class="mb-4 text-lg">
             <DateComponent dateString={post.data.publishDate.toISOString()} />
           </div>
         </div>
       </div>
-    </div>
-    
-    <div class="mx-auto max-w-2xl">
-      <div class="prose prose-lg max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-strong:font-semibold prose-code:text-pink-600 prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-pre:bg-gray-900 prose-pre:text-gray-100">
-        <Content />
+      <div class="mx-auto max-w-2xl">
+        <div class="prose prose-lg max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-strong:font-semibold prose-code:text-pink-600 prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-pre:bg-gray-900 prose-pre:text-gray-100">
+          <Content />
+        </div>
       </div>
-    </div>
-  </article>
+    </article>
+    <aside>
+      <hr class="border-accent-2 mb-24 mt-28" />
+      <h2 class="mb-8 text-6xl font-bold leading-tight tracking-tighter md:text-7xl">
+        Recent Stories
+      </h2>
+      <MoreStories posts={morePosts} />
+    </aside>
+  </div>
 </Layout>

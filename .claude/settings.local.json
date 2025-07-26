@@ -14,7 +14,8 @@
       "Bash(rm:*)",
       "Bash(find:*)",
       "Bash(cp:*)",
-      "Bash(true)"
+      "Bash(true)",
+      "WebFetch(domain:next-blog-sanity.vercel.app)"
     ],
     "deny": []
   }

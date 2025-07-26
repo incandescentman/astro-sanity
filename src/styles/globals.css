@@ -6,3 +6,8 @@
 :root {
   --font-inter: 'Inter', sans-serif;
 }
+
+/* Accent colors to match original Sanity template */
+.border-accent-2 {
+  border-color: #e5e7eb;
+}
