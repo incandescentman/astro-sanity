@@ -11,13 +11,16 @@ export default {
         'sm': '640px',
         'md': '768px',
         'lg': '1024px',
-        'xl': '1242px', // Match exact Sanity blog width
-        '2xl': '1242px', // Keep same for larger screens
+        'xl': '1282px', // 1242px + 40px padding = 1282px container
+        '2xl': '1282px', // Keep same for larger screens
       },
     },
     extend: {
       fontFamily: {
         sans: ['var(--font-inter)'],
+      },
+      fontSize: {
+        '4xl-custom': ['44px', '53px'], // Match Sanity blog exactly
       },
     },
   },
