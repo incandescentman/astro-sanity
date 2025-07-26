@@ -12,7 +12,9 @@
       "Bash(curl:*)",
       "Bash(mv:*)",
       "Bash(rm:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(cp:*)",
+      "Bash(true)"
     ],
     "deny": []
   }
