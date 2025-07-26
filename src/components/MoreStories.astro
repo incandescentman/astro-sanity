@@ -1,0 +1,44 @@
+---
+import CoverImage from './CoverImage.astro';
+import Avatar from './Avatar.astro';
+import DateComponent from './DateComponent.astro';
+
+export interface Props {
+  posts: any[];
+}
+
+const { posts } = Astro.props;
+---
+
+{posts && posts.length > 0 && (
+  <section>
+    <div class="mb-32 grid grid-cols-1 gap-y-20 md:grid-cols-2 md:gap-x-16 md:gap-y-32 lg:gap-x-32">
+      {posts.map((post) => (
+        <div key={post.id}>
+          <div class="mb-5">
+            <a class="group block" href={`/posts/${post.slug}`}>
+              <CoverImage 
+                image={{ asset: { _ref: post.data.coverImage }, alt: post.data.coverImageAlt }} 
+              />
+            </a>
+          </div>
+          <h3 class="text-pretty mb-3 text-3xl leading-snug">
+            <a href={`/posts/${post.slug}`} class="hover:underline">
+              {post.data.title}
+            </a>
+          </h3>
+          <div class="mb-4 text-lg">
+            <DateComponent dateString={post.data.publishDate.toISOString()} />
+          </div>
+          <p class="text-pretty mb-4 text-lg leading-relaxed">
+            {post.data.excerpt}
+          </p>
+          <Avatar 
+            name={post.data.author} 
+            picture={{ asset: { _ref: post.data.authorImage }, alt: `${post.data.author} photo` }} 
+          />
+        </div>
+      ))}
+    </div>
+  </section>
+)}

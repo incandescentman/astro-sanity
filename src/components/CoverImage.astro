@@ -1,0 +1,38 @@
+---
+export interface Props {
+  image: any;
+  priority?: boolean;
+}
+
+const { image, priority = false } = Astro.props;
+
+let imageUrl = '';
+let altText = '';
+
+// Handle direct URL (from MDX frontmatter)
+if (typeof image === 'string') {
+  imageUrl = image;
+  altText = '';
+} 
+// Handle object with asset reference (legacy Sanity format)
+else if (image?.asset?._ref) {
+  // For MDX, the _ref is actually a direct URL
+  imageUrl = image.asset._ref;
+  altText = image.alt || '';
+}
+---
+
+<div class="shadow-md transition-shadow duration-200 group-hover:shadow-lg sm:mx-0">
+  {imageUrl ? (
+    <img
+      class="h-auto w-full"
+      width={2000}
+      height={1000}
+      alt={altText}
+      src={imageUrl}
+      loading={priority ? 'eager' : 'lazy'}
+    />
+  ) : (
+    <div class="bg-slate-50" style="padding-top: 50%"></div>
+  )}
+</div>

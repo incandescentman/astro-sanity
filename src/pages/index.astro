@@ -1,0 +1,79 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import CoverImage from '../components/CoverImage.astro';
+import Avatar from '../components/Avatar.astro';
+import DateComponent from '../components/DateComponent.astro';
+import MoreStories from '../components/MoreStories.astro';
+
+// Get all blog posts, sorted by publish date (newest first)
+const allPosts = await getCollection('blog');
+const posts = allPosts.sort((a, b) => 
+  new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime()
+);
+
+const heroPost = posts[0];
+const morePosts = posts.slice(1);
+
+const title = "astro-sanity";
+const description = "A modern blog exploring the intersection of technology, design, and innovation in our digital world.";
+---
+
+<Layout title={title}>
+  <div class="container mx-auto px-5">
+    <!-- Intro Section -->
+    <section class="mt-16 mb-16 flex flex-col items-center lg:mb-12 lg:flex-row lg:justify-between">
+      <h1 class="text-balance text-6xl font-bold leading-tight tracking-tighter lg:pr-8 lg:text-8xl">
+        {title}
+      </h1>
+      <h2 class="text-pretty mt-5 text-center text-lg lg:pl-8 lg:text-left">
+        <div class="prose-lg">
+          <p>{description}</p>
+        </div>
+      </h2>
+    </section>
+
+    <!-- Hero Post -->
+    {heroPost && (
+      <article>
+        <a class="group mb-8 block md:mb-16" href={`/posts/${heroPost.slug}`}>
+          <CoverImage 
+            image={{ asset: { _ref: heroPost.data.coverImage }, alt: heroPost.data.coverImageAlt }} 
+            priority 
+          />
+        </a>
+        <div class="mb-20 md:mb-28 md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8">
+          <div>
+            <h3 class="text-pretty mb-4 text-4xl leading-tight lg:text-6xl">
+              <a href={`/posts/${heroPost.slug}`} class="hover:underline">
+                {heroPost.data.title}
+              </a>
+            </h3>
+            <div class="mb-4 text-lg md:mb-0">
+              <DateComponent dateString={heroPost.data.publishDate.toISOString()} />
+            </div>
+          </div>
+          <div>
+            <p class="text-pretty mb-4 text-lg leading-relaxed">
+              {heroPost.data.excerpt}
+            </p>
+            <Avatar 
+              name={heroPost.data.author} 
+              picture={{ asset: { _ref: heroPost.data.authorImage }, alt: `${heroPost.data.author} photo` }} 
+            />
+          </div>
+        </div>
+      </article>
+    )}
+
+    <!-- More Stories Section -->
+    {morePosts.length > 0 && (
+      <aside>
+        <h2 class="mb-8 text-6xl font-bold leading-tight tracking-tighter md:text-7xl">
+          More Stories
+        </h2>
+        <MoreStories posts={morePosts} />
+      </aside>
+    )}
+  </div>
+</Layout>

@@ -1,0 +1,40 @@
+---
+export interface Props {
+  name: string;
+  picture: any;
+}
+
+const { name, picture } = Astro.props;
+
+let imageUrl = '';
+let altText = '';
+
+// Handle direct URL (from MDX frontmatter)
+if (typeof picture === 'string') {
+  imageUrl = picture;
+  altText = `${name} photo`;
+}
+// Handle object with asset reference (legacy format)
+else if (picture?.asset?._ref) {
+  // For MDX, the _ref is actually a direct URL
+  imageUrl = picture.asset._ref;
+  altText = picture.alt || `${name} photo`;
+}
+---
+
+<div class="flex items-center text-xl">
+  {imageUrl ? (
+    <div class="mr-4 h-12 w-12">
+      <img
+        alt={altText}
+        class="h-full rounded-full object-cover"
+        height={48}
+        width={48}
+        src={imageUrl}
+      />
+    </div>
+  ) : (
+    <div class="mr-1">By </div>
+  )}
+  <div class="text-pretty text-xl font-bold">{name}</div>
+</div>

@@ -1,0 +1,145 @@
+---
+title: "Mastering TypeScript: Advanced Patterns for Better Code"
+excerpt: "Dive deep into TypeScript's most powerful features and learn advanced patterns that will make your code more robust, maintainable, and expressive."
+publishDate: 2024-11-28
+author: "Sarah Chen"
+authorImage: "https://images.unsplash.com/photo-1494790108755-2616b612b3b5?w=400&h=400&fit=crop&crop=face"
+coverImage: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=2000&h=1000&fit=crop"
+coverImageAlt: "TypeScript code on multiple monitors"
+tags: ["typescript", "patterns", "type-safety", "advanced"]
+---
+
+TypeScript has evolved from a simple type layer over JavaScript into a sophisticated type system that rivals those found in traditional strongly-typed languages. Understanding its advanced patterns can dramatically improve your development experience.
+
+## Conditional Types and Template Literals
+
+Conditional types allow you to create types that change based on conditions, while template literal types enable you to manipulate string types at the type level. Together, they unlock powerful patterns for creating type-safe APIs.
+
+```typescript
+// Conditional type for API responses
+type ApiResponse<T> = T extends string
+  ? { message: T; status: 'success' | 'error' }
+  : { data: T; status: 'success' }
+
+// Template literal types for event handling
+type EventName<T extends string> = `on${Capitalize<T>}`
+type ClickHandler = EventName<'click'> // 'onClick'
+```
+
+## Mapped Types and Key Remapping
+
+Mapped types let you transform existing types by iterating over their properties:
+
+```typescript
+// Make all properties optional and readonly
+type ReadonlyPartial<T> = {
+  readonly [P in keyof T]?: T[P]
+}
+
+// Key remapping for API transformations
+type ApiKeys<T> = {
+  [K in keyof T as `api_${string & K}`]: T[K]
+}
+
+type User = {
+  name: string
+  email: string
+}
+
+type ApiUser = ApiKeys<User>
+// Result: { api_name: string; api_email: string }
+```
+
+## Utility Types for Complex Scenarios
+
+TypeScript's built-in utility types are powerful, but you can create your own:
+
+```typescript
+// Deep partial for nested objects
+type DeepPartial<T> = {
+  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P]
+}
+
+// Extract function parameters
+type Parameters<T extends (...args: any) => any> = 
+  T extends (...args: infer P) => any ? P : never
+
+// Create a union of all possible paths in an object
+type Paths<T> = T extends object
+  ? {
+      [K in keyof T]: K extends string
+        ? T[K] extends object
+          ? K | `${K}.${Paths<T[K]>}`
+          : K
+        : never
+    }[keyof T]
+  : never
+```
+
+## Type Guards and Assertion Functions
+
+Type guards help TypeScript understand your runtime checks:
+
+```typescript
+// Type predicate
+function isString(value: unknown): value is string {
+  return typeof value === 'string'
+}
+
+// Assertion function
+function assertIsNumber(value: unknown): asserts value is number {
+  if (typeof value !== 'number') {
+    throw new Error('Expected number')
+  }
+}
+
+// Usage
+function processValue(value: unknown) {
+  if (isString(value)) {
+    // TypeScript knows value is string here
+    return value.toUpperCase()
+  }
+  
+  assertIsNumber(value)
+  // TypeScript knows value is number here
+  return value * 2
+}
+```
+
+## Building Type-Safe APIs
+
+These patterns combine to create incredibly type-safe APIs:
+
+```typescript
+// Database query builder with type safety
+class QueryBuilder<T> {
+  select<K extends keyof T>(...fields: K[]): QueryBuilder<Pick<T, K>> {
+    // Implementation
+    return this as any
+  }
+  
+  where<K extends keyof T>(
+    field: K,
+    value: T[K]
+  ): QueryBuilder<T> {
+    // Implementation
+    return this
+  }
+}
+
+// Usage with full type safety
+const users = new QueryBuilder<User>()
+  .select('name', 'email') // Only allows valid fields
+  .where('email', 'user@example.com') // Type-checks the value
+```
+
+## The Benefits
+
+These advanced TypeScript patterns provide:
+
+- **Compile-time safety** that catches errors before runtime
+- **Better IntelliSense** with accurate autocomplete and refactoring
+- **Self-documenting code** where types serve as inline documentation
+- **Confident refactoring** knowing that the compiler will catch breaking changes
+
+Mastering these patterns transforms TypeScript from a simple type checker into a powerful development tool that guides you toward better code architecture.
