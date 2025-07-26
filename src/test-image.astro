@@ -1,0 +1,21 @@
+---
+// Test if the alias and image system works
+import { findImage } from '~/utils/images';
+
+const testImagePath = '~/assets/images/authors/20241201_0000_sarah-chen.jpg';
+console.log('Testing image path:', testImagePath);
+
+const resolvedImage = await findImage(testImagePath);
+console.log('Resolved image:', resolvedImage);
+console.log('Image type:', typeof resolvedImage);
+console.log('Image src:', resolvedImage?.src);
+---
+
+<div>
+  <h1>Image Test</h1>
+  <p>Image path: {testImagePath}</p>
+  <p>Resolved: {typeof resolvedImage}</p>
+  {resolvedImage && (
+    <img src={typeof resolvedImage === 'string' ? resolvedImage : resolvedImage.src} alt="Test" width="100" />
+  )}
+</div>
