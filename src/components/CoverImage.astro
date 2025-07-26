@@ -11,7 +11,7 @@ const { image, priority = false } = Astro.props;
 const imageUrl = await findImage(image);
 ---
 
-<div class="shadow-md transition-shadow duration-200 group-hover:shadow-lg sm:mx-0">
+<div class="shadow-small transition-shadow duration-200 group-hover:shadow-lg sm:mx-0">
   {imageUrl ? (
     <img
       class="h-auto w-full"

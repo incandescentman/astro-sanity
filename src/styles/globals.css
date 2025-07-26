@@ -11,3 +11,8 @@
 .border-accent-2 {
   border-color: #e5e7eb;
 }
+
+/* Custom shadows to match original Sanity template */
+.shadow-small {
+  box-shadow: 0 5px 10px rgba(0, 0, 0, .12);
+}
