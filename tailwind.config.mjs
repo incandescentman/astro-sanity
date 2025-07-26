@@ -19,9 +19,6 @@ export default {
       fontFamily: {
         sans: ['var(--font-inter)'],
       },
-      fontSize: {
-        '4xl-custom': ['44px', '53px'], // Match Sanity blog exactly
-      },
     },
   },
   future: {
