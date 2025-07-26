@@ -59,7 +59,7 @@ const example = "You can include syntax-highlighted code blocks";
 ## Interactive Components
 
 You can even embed React components if needed!
-```
+
 
 ## Content Structure
 
