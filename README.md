@@ -141,6 +141,5 @@ MIT License - see the [LICENSE](LICENSE) file for details.
 This project is derived from the [Sanity blog template](https://github.com/vercel/next.js/tree/canary/examples/cms-sanity) originally created by Vercel, Inc. The beautiful design, typography, and layout concepts are preserved from the original template. 
 
 **Original template:** Copyright (c) 2025 Vercel, Inc.  
-**Astro conversion:** astro-sanity project contributors
 
 We're grateful to the Vercel team for creating such an elegant blog template that serves as the foundation for this Astro conversion.

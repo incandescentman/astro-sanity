@@ -26,10 +26,10 @@ const { Content } = await post.render();
         {post.data.title}
       </h1>
       
-      {post.data.coverImage && (
+      {post.data.Image && (
         <div class="mb-8 md:mb-16">
           <CoverImage 
-            image={{ asset: { _ref: post.data.coverImage }, alt: post.data.coverImageAlt }} 
+            image={{ asset: { _ref: post.data.Image }, alt: post.data.ImageAlt }} 
             priority 
           />
         </div>
