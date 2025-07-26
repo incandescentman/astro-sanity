@@ -18,7 +18,7 @@ const { posts } = Astro.props;
           <div class="mb-5">
             <a class="group block" href={`/posts/${post.slug}`}>
               <CoverImage 
-                image={{ asset: { _ref: post.data.Image }, alt: post.data.ImageAlt }} 
+                image={post.data.Image}
               />
             </a>
           </div>
@@ -35,7 +35,7 @@ const { posts } = Astro.props;
           </p>
           <Avatar 
             name={post.data.author} 
-            picture={{ asset: { _ref: post.data.authorImage }, alt: `${post.data.author} photo` }} 
+            picture={post.data.authorImage}
           />
         </div>
       ))}

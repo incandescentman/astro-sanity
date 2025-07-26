@@ -38,7 +38,7 @@ const description = "A modern blog exploring the intersection of technology, des
       <article>
         <a class="group mb-8 block md:mb-16" href={`/posts/${heroPost.slug}`}>
           <CoverImage 
-            image={{ asset: { _ref: heroPost.data.Image }, alt: heroPost.data.ImageAlt }} 
+            image={heroPost.data.Image}
             priority 
           />
         </a>
@@ -59,7 +59,7 @@ const description = "A modern blog exploring the intersection of technology, des
             </p>
             <Avatar 
               name={heroPost.data.author} 
-              picture={{ asset: { _ref: heroPost.data.authorImage }, alt: `${heroPost.data.author} photo` }} 
+              picture={heroPost.data.authorImage}
             />
           </div>
         </div>

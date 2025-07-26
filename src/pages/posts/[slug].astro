@@ -29,7 +29,7 @@ const { Content } = await post.render();
       {post.data.Image && (
         <div class="mb-8 md:mb-16">
           <CoverImage 
-            image={{ asset: { _ref: post.data.Image }, alt: post.data.ImageAlt }} 
+            image={post.data.Image}
             priority 
           />
         </div>
@@ -39,7 +39,7 @@ const { Content } = await post.render();
         <div class="mb-6 block md:hidden">
           <Avatar 
             name={post.data.author} 
-            picture={{ asset: { _ref: post.data.authorImage }, alt: `${post.data.author} photo` }} 
+            picture={post.data.authorImage}
           />
           <div class="mb-6 text-lg">
             <DateComponent dateString={post.data.publishDate.toISOString()} />
@@ -49,7 +49,7 @@ const { Content } = await post.render();
         <div class="hidden md:block mb-12">
           <Avatar 
             name={post.data.author} 
-            picture={{ asset: { _ref: post.data.authorImage }, alt: `${post.data.author} photo` }} 
+            picture={post.data.authorImage}
           />
           <div class="mb-6 text-lg">
             <DateComponent dateString={post.data.publishDate.toISOString()} />

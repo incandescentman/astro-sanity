@@ -1,25 +1,15 @@
 ---
+import { findImage } from '../utils/images';
+
 export interface Props {
   name: string;
-  picture: any;
+  picture: string;
 }
 
 const { name, picture } = Astro.props;
 
-let imageUrl = '';
-let altText = '';
-
-// Handle direct URL (from MDX frontmatter)
-if (typeof picture === 'string') {
-  imageUrl = picture;
-  altText = `${name} photo`;
-}
-// Handle object with asset reference (legacy format)
-else if (picture?.asset?._ref) {
-  // For MDX, the _ref is actually a direct URL
-  imageUrl = picture.asset._ref;
-  altText = picture.alt || `${name} photo`;
-}
+const imageUrl = await findImage(picture);
+const altText = `${name} photo`;
 ---
 
 <div class="flex items-center text-xl">
@@ -30,7 +20,7 @@ else if (picture?.asset?._ref) {
         class="h-full rounded-full object-cover"
         height={48}
         width={48}
-        src={imageUrl}
+        src={typeof imageUrl === 'string' ? imageUrl : imageUrl?.src}
       />
     </div>
   ) : (
